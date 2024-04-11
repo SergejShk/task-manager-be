@@ -3,6 +3,14 @@ import { drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 import dotenv from 'dotenv';
 
+import { UsersDb } from './database/usersDb';
+
+import { AuthService } from './services/authService';
+
+import { AuthMiddlewares } from './middlewares/authMiddlewares';
+
+import { AuthController } from './controllers/AuthController';
+
 import App from './app';
 
 dotenv.config();
@@ -25,14 +33,18 @@ const serverStart = async () => {
     await migrate(db, { migrationsFolder: './migrations' });
 
     // dbs
+    const usersDb = new UsersDb(db);
 
     // services
+    const authService = new AuthService(usersDb);
 
     // middlewares
+    const authMiddlewares = new AuthMiddlewares(usersDb);
 
     //controllers
+    const authController = new AuthController(authService, authMiddlewares);
 
-    const app = new App(PORT, []);
+    const app = new App(PORT, [authController]);
 
     app.listen();
   } catch (error: any) {

@@ -36,7 +36,7 @@ export class AuthMiddlewares {
         return next(new UnauthorizedError('Not authorized'));
       }
 
-      const { password, ...user } = response;
+      const { password, createdAt, ...user } = response;
 
       //@ts-ignore
       req.user = user as IUser;

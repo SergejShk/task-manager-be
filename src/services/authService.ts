@@ -130,7 +130,7 @@ export class AuthService {
     const accessToken = this.getToken(payloadToken, Token.Access);
     const refreshToken = this.getToken(payloadToken, Token.Refresh);
 
-    return { ...response, accessToken, refreshToken };
+    return { ...payloadToken, accessToken, refreshToken };
   };
 
   refreshTokens = async (token: string): Promise<GeneratedAuthTokens> => {
