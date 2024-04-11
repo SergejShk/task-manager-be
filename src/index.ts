@@ -22,6 +22,7 @@ const serverStart = async () => {
     });
 
     // migrations
+    await migrate(db, { migrationsFolder: './migrations' });
 
     // dbs
 
