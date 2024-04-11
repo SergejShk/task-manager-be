@@ -1,0 +1,10 @@
+# dependencies
+node_modules
+
+.env
+.env.prod
+.env.original
+.env*.local
+
+# misc
+.DS_Store
