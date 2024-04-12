@@ -1,5 +1,5 @@
 {
-  "id": "e94d6443-32eb-4f57-8452-d8180220a416",
+  "id": "4f477cc0-fca9-495a-baf2-081018600ace",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -34,7 +34,7 @@
         },
         "due_date": {
           "name": "due_date",
-          "type": "timestamp",
+          "type": "date",
           "primaryKey": false,
           "notNull": false
         },

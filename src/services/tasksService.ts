@@ -11,4 +11,8 @@ export class TasksService {
   create = async (newTask: NewTask) => {
     return this.tasksDb.createTask(newTask);
   };
+
+  getListByUserId = async (userId: number) => {
+    return await this.tasksDb.getTasks(userId);
+  };
 }

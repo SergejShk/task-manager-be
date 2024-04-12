@@ -1,4 +1,5 @@
 import {
+  date,
   pgTable,
   serial,
   varchar,
@@ -21,7 +22,7 @@ const tasks = pgTable('tasks', {
   title: varchar('title').notNull(),
   description: varchar('description').notNull(),
   assignee: varchar('assignee'),
-  dueDate: timestamp('due_date'),
+  dueDate: date('due_date', { mode: 'date' }),
   status: taskStatus('status').notNull(),
   userId: integer('user_id')
     .references(() => users.id)

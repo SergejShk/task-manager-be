@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS "tasks" (
 	"title" varchar NOT NULL,
 	"description" varchar NOT NULL,
 	"assignee" varchar,
-	"due_date" timestamp,
+	"due_date" date,
 	"status" "task_status" NOT NULL,
 	"user_id" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL

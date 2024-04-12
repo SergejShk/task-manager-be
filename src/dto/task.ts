@@ -12,3 +12,9 @@ export const createTaskSchema = z
     userId: z.coerce.number(),
   })
   .strict();
+
+export const getTasksSchema = z
+  .object({
+    userId: z.coerce.number(),
+  })
+  .strict();
