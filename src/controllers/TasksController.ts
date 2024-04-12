@@ -16,7 +16,7 @@ import {
 import { AuthMiddlewares } from '../middlewares/authMiddlewares';
 
 import { InvalidParameterError } from '../errors/customErrors';
-import { IStatistic } from '@/interfaces/tasks';
+import { IStatistic } from '../interfaces/tasks';
 
 export class TasksController extends Controller {
   tasksService: TasksService;
