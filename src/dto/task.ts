@@ -9,5 +9,6 @@ export const createTaskSchema = z
     assignee: z.string().optional(),
     dueDate: z.coerce.date().optional(),
     status: z.nativeEnum(EStatus),
+    userId: z.coerce.number(),
   })
   .strict();

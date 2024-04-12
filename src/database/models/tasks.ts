@@ -4,8 +4,11 @@ import {
   varchar,
   timestamp,
   pgEnum,
+  integer,
 } from 'drizzle-orm/pg-core';
 import { type InferSelectModel, type InferInsertModel } from 'drizzle-orm';
+
+import users from './users';
 
 export const taskStatus = pgEnum('task_status', [
   'open',
@@ -18,8 +21,11 @@ const tasks = pgTable('tasks', {
   title: varchar('title').notNull(),
   description: varchar('description').notNull(),
   assignee: varchar('assignee'),
-  dueDate: varchar('due_date'),
+  dueDate: timestamp('due_date'),
   status: taskStatus('status').notNull(),
+  userId: integer('user_id')
+    .references(() => users.id)
+    .notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 });
 

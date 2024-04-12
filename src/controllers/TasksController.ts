@@ -34,11 +34,18 @@ export class TasksController extends Controller {
   }
 
   private createTask: RequestHandler<{}, Task> = async (req, res) => {
-    const validatedBody = createTaskSchema.safeParse(req.body);
+    //  @ts-ignore
+    const user = req.user as IUser;
+    const validatedBody = createTaskSchema.safeParse({
+      ...req.body,
+      userId: user.id,
+    });
+
     if (!validatedBody.success) {
       throw new InvalidParameterError('Bad request');
     }
-    const createdTask = await this.tasksService.create(req.body);
+
+    const createdTask = await this.tasksService.create(validatedBody.data);
 
     return res.status(201).json(createdTask);
   };
