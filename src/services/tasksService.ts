@@ -1,6 +1,7 @@
 import { NewTask } from '../database/models/tasks';
 import { TasksDb } from '../database/tasksDb';
 
+import { IUpdateTask } from '../interfaces/tasks';
 export class TasksService {
   private tasksDb: TasksDb;
 
@@ -14,5 +15,9 @@ export class TasksService {
 
   getListByUserId = async (userId: number) => {
     return await this.tasksDb.getTasks(userId);
+  };
+
+  updateTask = async (task: IUpdateTask) => {
+    return await this.tasksDb.updateTask(task);
   };
 }

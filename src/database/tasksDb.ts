@@ -3,6 +3,8 @@ import { asc, eq } from 'drizzle-orm';
 
 import tasks, { NewTask } from './models/tasks';
 
+import { IUpdateTask } from '../interfaces/tasks';
+
 export class TasksDb {
   constructor(private db: NodePgDatabase) {}
 
@@ -21,4 +23,18 @@ export class TasksDb {
       .where(eq(tasks.userId, userId))
       .orderBy(asc(tasks.createdAt));
   };
+
+  public updateTask = async (task: IUpdateTask) =>
+    this.db
+      .update(tasks)
+      .set({
+        title: task.title,
+        description: task.description,
+        assignee: task.assignee,
+        dueDate: task.dueDate,
+        status: task.status,
+      })
+      .where(eq(tasks.id, task.id))
+      .returning()
+      .then(res => res[0]);
 }

@@ -18,3 +18,14 @@ export const getTasksSchema = z
     userId: z.coerce.number(),
   })
   .strict();
+
+export const updateTasksSchema = z
+  .object({
+    id: z.coerce.number(),
+    title: z.string(),
+    description: z.string(),
+    assignee: z.string().optional(),
+    dueDate: z.coerce.date().optional(),
+    status: z.nativeEnum(EStatus),
+  })
+  .strict();

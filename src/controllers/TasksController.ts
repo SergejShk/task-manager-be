@@ -6,7 +6,11 @@ import { Task } from '../database/models/tasks';
 
 import { TasksService } from '../services/tasksService';
 
-import { createTaskSchema, getTasksSchema } from '../dto/task';
+import {
+  createTaskSchema,
+  getTasksSchema,
+  updateTasksSchema,
+} from '../dto/task';
 
 import { AuthMiddlewares } from '../middlewares/authMiddlewares';
 
@@ -35,6 +39,11 @@ export class TasksController extends Controller {
       '/',
       this.authMiddlewares.isAuthorized,
       this.link({ route: this.getTasksList })
+    );
+    this.router.put(
+      '/:id',
+      this.authMiddlewares.isAuthorized,
+      this.link({ route: this.updateTask })
     );
   }
 
@@ -71,5 +80,23 @@ export class TasksController extends Controller {
     );
 
     return res.status(200).json(tasks);
+  };
+
+  private updateTask: RequestHandler<{ id: string }, Task> = async (
+    req,
+    res
+  ) => {
+    const validatedBody = updateTasksSchema.safeParse({
+      ...req.body,
+      id: req.params.id,
+    });
+
+    if (!validatedBody.success) {
+      throw new InvalidParameterError('Bad request');
+    }
+
+    const task = await this.tasksService.updateTask(validatedBody.data);
+
+    return res.status(200).json(task);
   };
 }
