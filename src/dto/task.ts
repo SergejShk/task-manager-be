@@ -29,3 +29,9 @@ export const updateTasksSchema = z
     status: z.nativeEnum(EStatus),
   })
   .strict();
+
+export const deleteTaskSchema = z
+  .object({
+    id: z.coerce.number(),
+  })
+  .strict();

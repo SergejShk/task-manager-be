@@ -37,4 +37,10 @@ export class TasksDb {
       .where(eq(tasks.id, task.id))
       .returning()
       .then(res => res[0]);
+
+  public getTaskById = async (id: number) =>
+    this.db.select().from(tasks).where(eq(tasks.id, id));
+
+  public deleteTask = async (id: number) =>
+    this.db.delete(tasks).where(eq(tasks.id, id));
 }

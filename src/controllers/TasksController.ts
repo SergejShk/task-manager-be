@@ -8,6 +8,7 @@ import { TasksService } from '../services/tasksService';
 
 import {
   createTaskSchema,
+  deleteTaskSchema,
   getTasksSchema,
   updateTasksSchema,
 } from '../dto/task';
@@ -44,6 +45,11 @@ export class TasksController extends Controller {
       '/:id',
       this.authMiddlewares.isAuthorized,
       this.link({ route: this.updateTask })
+    );
+    this.router.delete(
+      '/:id',
+      this.authMiddlewares.isAuthorized,
+      this.link({ route: this.deleteTask })
     );
   }
 
@@ -98,5 +104,22 @@ export class TasksController extends Controller {
     const task = await this.tasksService.updateTask(validatedBody.data);
 
     return res.status(200).json(task);
+  };
+
+  private deleteTask: RequestHandler<{ id: string }, boolean> = async (
+    req,
+    res
+  ) => {
+    const validatedBody = deleteTaskSchema.safeParse({
+      id: req.params.id,
+    });
+
+    if (!validatedBody.success) {
+      throw new InvalidParameterError('Bad request');
+    }
+
+    const isDeleted = await this.tasksService.deleteTask(validatedBody.data.id);
+
+    return res.status(200).json(isDeleted);
   };
 }
