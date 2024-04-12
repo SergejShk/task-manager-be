@@ -12,3 +12,13 @@ export interface IUpdateTask {
   dueDate?: Date;
   status: EStatus;
 }
+
+export type IStatisticItem = {
+  [key in string]: number;
+};
+
+export interface IStatistic {
+  status: IStatisticItem;
+  assignee: IStatisticItem;
+  dueDate: IStatisticItem;
+}

@@ -16,6 +16,7 @@ import {
 import { AuthMiddlewares } from '../middlewares/authMiddlewares';
 
 import { InvalidParameterError } from '../errors/customErrors';
+import { IStatistic } from '@/interfaces/tasks';
 
 export class TasksController extends Controller {
   tasksService: TasksService;
@@ -50,6 +51,11 @@ export class TasksController extends Controller {
       '/:id',
       this.authMiddlewares.isAuthorized,
       this.link({ route: this.deleteTask })
+    );
+    this.router.get(
+      '/statistic',
+      this.authMiddlewares.isAuthorized,
+      this.link({ route: this.getStatisticTasks })
     );
   }
 
@@ -121,5 +127,17 @@ export class TasksController extends Controller {
     const isDeleted = await this.tasksService.deleteTask(validatedBody.data.id);
 
     return res.status(200).json(isDeleted);
+  };
+
+  private getStatisticTasks: RequestHandler<{}, IStatistic> = async (
+    req,
+    res
+  ) => {
+    //  @ts-ignore
+    const user = req.user as IUser;
+
+    const statistic = await this.tasksService.tasksStatistic(user.id);
+
+    return res.status(200).json(statistic);
   };
 }
